@@ -19,16 +19,12 @@ while (<>) {
 }
 my $cards = $#matching + 1;
 my @avail = (1) x $cards;
-while (1) {
-    my $winning = 0;
-    for my $i (0 .. $#avail) {
-        next unless $avail[$i];
-        for my $j ($i + 1 .. $i + $matching[$i]) {
-            $avail[$j] += $avail[$i];
-            $cards += $avail[$i];
-        }
-        $avail[$i] = 0;
+my $winning = 0;
+for my $i (0 .. $#avail) {
+    next unless $avail[$i];
+    for my $j ($i + 1 .. $i + $matching[$i]) {
+        $avail[$j] += $avail[$i];
     }
-    last unless $winning;
+    $cards += $avail[$i] * $matching[$i];
 }
 print "$cards\n";
